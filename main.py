@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import inspect, text
 import bcrypt
 
-from src.routes import players , matches , kills , admin , analytics , leaderboard , stats
+from src.routes import players , matches , kills , admin , analytics , leaderboard , stats , health
 from src.database import engine, Base, SessionLocal
 from src.models.admin import Admin
 from src.config import settings
@@ -39,10 +39,6 @@ def create_default_admin() -> None:
     finally:
         db.close()
 
-@app.get("/health")
-def healthcheck():
-    return {"status": "healthy", "service": "warzone-api"}
-    
 create_default_admin()
 
 app = FastAPI(title="Warzone API", description="API pour gérer les joueurs, les matchs et les statistiques de Warzone")
@@ -62,4 +58,4 @@ app.include_router(leaderboard.router)
 app.include_router(analytics.router)
 app.include_router(admin.router)
 app.include_router(stats.router)
-
+app.include_router(health.router)
