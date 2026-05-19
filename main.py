@@ -39,6 +39,10 @@ def create_default_admin() -> None:
     finally:
         db.close()
 
+@app.get("/health")
+def healthcheck():
+    return {"status": "healthy", "service": "warzone-api"}
+    
 create_default_admin()
 
 app = FastAPI(title="Warzone API", description="API pour gérer les joueurs, les matchs et les statistiques de Warzone")
